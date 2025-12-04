@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Node.js dependencies
+node_modules/
+
+# IDE settings (WebStorm, IntelliJ IDEA)
+.idea/
