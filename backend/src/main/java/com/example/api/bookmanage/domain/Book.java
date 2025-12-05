@@ -37,6 +37,18 @@ public class Book {
         FANTASY, SF, ROMANCE, MYSTERY, THRILLER, ESSAY, BUSINESS, SCIENCE, ART
     }
 
+    @Column(length = 45)
+    private String publisher;
+
+    @Column()
+    private String coverImg;
+
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
+
+    public enum Genre{
+        FANTASY, SF, THRILLER, ROMANCE, MYSTERY, ESSAY, HISTORY
+    }
 //    @Column(length = 45)
 //    private String publisher;
 //
