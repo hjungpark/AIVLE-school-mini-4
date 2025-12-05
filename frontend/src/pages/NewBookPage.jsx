@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Box, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
-function NewBookPage() {
+function NewBookPage({ addNewBook }) {
     const [formData, setFormData] = useState({
         title: '',
         author: '',
         description: '',
-        genre: ''
+        genre: '',
+        publisher: ''  // 출판사 추가
     });
     const navigate = useNavigate();
 
@@ -21,9 +22,15 @@ function NewBookPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // 도서 등록 로직 (여기서는 mock data로 처리)
-        console.log('등록된 도서:', formData);
-        navigate('/books');  // 도서 목록 페이지로 이동
+        // 도서 등록 후, 상위 컴포넌트에서 상태 업데이트
+        addNewBook(formData);
+
+        // 도서 목록 페이지로 이동
+        navigate('/books');
+    };
+
+    const handleGoBack = () => {
+        navigate(-1); // 이전 페이지로 돌아가기
     };
 
     return (
@@ -39,7 +46,6 @@ function NewBookPage() {
                         fullWidth
                         required
                         margin="normal"
-                        inputProps={{ maxLength: 40 }}
                     />
                     <TextField
                         label="작가 이름"
@@ -49,7 +55,6 @@ function NewBookPage() {
                         fullWidth
                         required
                         margin="normal"
-                        inputProps={{ maxLength: 35 }}
                     />
                     <TextField
                         label="도서 줄거리"
@@ -61,7 +66,15 @@ function NewBookPage() {
                         margin="normal"
                         multiline
                         rows={4}
-                        inputProps={{ maxLength: 500 }}
+                    />
+                    <TextField
+                        label="출판사"
+                        name="publisher"
+                        value={formData.publisher}
+                        onChange={handleChange}
+                        fullWidth
+                        required
+                        margin="normal"
                     />
                     <FormControl fullWidth margin="normal">
                         <InputLabel>장르 선택</InputLabel>
@@ -72,14 +85,24 @@ function NewBookPage() {
                             onChange={handleChange}
                             required
                         >
-                            <MenuItem value="Fantasy">판타지</MenuItem>
-                            <MenuItem value="Sci-Fi">과학소설</MenuItem>
-                            <MenuItem value="Mystery">미스터리</MenuItem>
-                            <MenuItem value="Romance">로맨스</MenuItem>
+                            <MenuItem value="Fantasy">로맨스</MenuItem>
+                            <MenuItem value="Sci-Fi">SF/판타지</MenuItem>
+                            <MenuItem value="Mystery">미스터리/공포</MenuItem>
+                            <MenuItem value="Romance">드라마</MenuItem>
                         </Select>
                     </FormControl>
                     <Button type="submit" variant="contained" color="primary" fullWidth>
                         표지 생성 및 등록
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="outlined"
+                        color="secondary"
+                        fullWidth
+                        style={{ marginTop: '10px' }}
+                        onClick={handleGoBack}
+                    >
+                        이전 페이지로 돌아가기
                     </Button>
                 </form>
             </Box>
@@ -88,6 +111,12 @@ function NewBookPage() {
 }
 
 export default NewBookPage;
+
+
+
+
+
+
 
 
 

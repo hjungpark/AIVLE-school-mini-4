@@ -16,7 +16,7 @@
     height: 200%;
     justify-content: center;
     align-items: center;
-    background-color: #2c3e50;
+    background-color: white;
 }
 
 .book-cover img {
@@ -32,7 +32,7 @@
 .book-info h3 {
     font-size: 20px;
     font-weight: bold;
-    color: black;
+    color: #646cff;
     line-height: 1;
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BookCard({ title, author, isbn, publisher, genre }) {
+function BookCard({ title, author, isbn, publisher, genre, onClick }) {
     return (
         <div className="book-card" style={{
             border: '1px solid #ccc',
@@ -8,11 +8,11 @@ function BookCard({ title, author, isbn, publisher, genre }) {
             margin: '10px',
             borderRadius: '5px',
             display: 'flex',
-            flexDirection: 'row'
-        }}>
+            flexDirection: 'row',
+            cursor: 'pointer' // 클릭할 수 있음을 나타내는 커서 변경
+        }} onClick={onClick}>
             <div className="book-cover">
-                {/* 출판사의 이미지를 보여주도록 처리 */}
-                <img src={publisher} className="book-cover-img" alt="book cover" style={{ width: '100px', height: '150px', marginRight: '20px' }} />
+                <img src="https://via.placeholder.com/100x150" alt="book cover" style={{ width: '100px', height: '150px', marginRight: '20px' }} />
             </div>
             <div className="book-info">
                 <h3>{title}</h3>
@@ -20,14 +20,13 @@ function BookCard({ title, author, isbn, publisher, genre }) {
                 <p className="isbn">ISBN: {isbn}</p>
                 <p className="publisher">출판사: {publisher}</p>
                 <p className="genre">장르: {genre}</p>
-                <div className="book-actions">
-                    <button className="edit">수정</button>
-                    <button className="delete">삭제</button>
-                </div>
             </div>
         </div>
     );
 }
 
 export default BookCard;
+
+
+
 

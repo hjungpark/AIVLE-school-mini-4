@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';  // 회원가입 페이지
 import LoginPage from './pages/LoginPage';  // 로그인 페이지
@@ -7,14 +7,21 @@ import BookDetailPage from './pages/BookDetailPage';  // 도서 상세 페이지
 import BookListPage from './pages/BookListPage';  // 도서 목록 페이지
 
 function App() {
+    const [books, setBooks] = useState([]);  // 도서 목록 상태 관리
+
+    // 새 도서를 추가하는 함수
+    const addNewBook = (newBook) => {
+        setBooks(prevBooks => [...prevBooks, newBook]);
+    };
+
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/new-book" element={<NewBookPage />} />
+                <Route path="/new-book" element={<NewBookPage addNewBook={addNewBook} />} />
                 <Route path="/book/:id" element={<BookDetailPage />} />
-                <Route path="/books" element={<BookListPage />} />
+                <Route path="/books" element={<BookListPage books={books} />} />
             </Routes>
         </Router>
     );
