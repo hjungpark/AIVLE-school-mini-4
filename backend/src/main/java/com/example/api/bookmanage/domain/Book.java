@@ -21,13 +21,13 @@ public class Book {
     private String title;
 
     @Column()
+    private String summary;
+
+    @Column()
     private String author;
 
     @Column(length = 45)
     private String publisher;
-
-    @Column()
-    private String summary;
 
     @Column()
     private String coverImg;
@@ -36,7 +36,7 @@ public class Book {
     private Genre genre;
 
     public enum Genre{
-        FANTASY, SF, ROMANCE, MYSTERY, THRILLER, ESSAY, BUSINESS, SCIENCE, ART
+        FANTASY, SF, THRILLER, ROMANCE, MYSTERY, ESSAY, HISTORY
     }
 
 //    @Column(length = 45)
