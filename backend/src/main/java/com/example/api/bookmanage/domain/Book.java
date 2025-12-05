@@ -23,7 +23,7 @@ public class Book {
     @Column()
     private String summary;
 
-    @Column(length = 45)
+    @Column()
     private String author;
 
     @Column(length = 45)
