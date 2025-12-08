@@ -19,14 +19,25 @@ function App() {
     return (
         <Router>
             <Routes>
+                {/* 로그인, 메인 페이지는 레이아웃 없이 렌더링 */}
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />
+
+                {/* 사이드바와 헤더가 포함된 레이아웃 */}
                 <Route element={<Layout />}>
                     <Route path="/books" element={<BookListPage books={books} setBooks={setBooks} />} />
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/new-book" element={<NewBookPage addNewBook={addNewBook} />} />
                     <Route path="/book/:id" element={<BookDetailPage books={books} />} />
+                    
+                    {/* ▼▼▼ [수정된 부분] 아래 두 줄이 모두 있어야 합니다 ▼▼▼ */}
+                    
+                    {/* 1. 사이드바에서 '도서 수정' 눌렀을 때 (목록 나옴) */}
+                    <Route path="/edit-book" element={<EditBookPage books={books} setBooks={setBooks} />} />
+                    
+                    {/* 2. 목록에서 '수정하기' 버튼 눌렀을 때 (수정 폼 나옴) */}
                     <Route path="/edit-book/:id" element={<EditBookPage books={books} setBooks={setBooks} />} />
+                
                 </Route>
             </Routes>
         </Router>
