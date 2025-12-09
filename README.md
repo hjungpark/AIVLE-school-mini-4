@@ -32,7 +32,7 @@ AI 이미지 생성 기술을 활용해 도서 표지를 자동 생성하는 기
 <br>
 
 ### 3일차
-<img width="1500" height="1391" alt="스크린샷 2025-12-09 145825" src="https://github.com/user-attachments/assets/e7a49a62-bce1-41be-8dc5-5b170c51e97b" />
+<img width="600" alt="스크린샷 2025-12-09 145825" src="https://github.com/user-attachments/assets/e7a49a62-bce1-41be-8dc5-5b170c51e97b" />
 
 
 - 도서 목록, 상세, 등록, 수정 페이지 UI 컴포넌트 구현
