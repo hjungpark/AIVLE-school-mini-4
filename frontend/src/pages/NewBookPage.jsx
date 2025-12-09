@@ -6,7 +6,7 @@ function NewBookPage({ addNewBook }) {
     const [formData, setFormData] = useState({
         title: '',
         author: '',
-        description: '',
+        summary: '',
         genre: '',
         publisher: ''  // 출판사 추가
     });
@@ -20,13 +20,35 @@ function NewBookPage({ addNewBook }) {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // 도서 등록 후, 상위 컴포넌트에서 상태 업데이트
-        addNewBook(formData);
 
-        // 도서 목록 페이지로 이동
-        navigate('/books');
+        try{
+            console.log(formData.summary);
+            const response = await fetch("http://localhost:8080/api/books", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error("도서 등록 실패");
+            }
+
+            const data = await response.json();
+            console.log("서버 응답:", data);
+
+            alert("도서가 성공적으로 등록되었습니다!");
+            // 도서 등록 후, 상위 컴포넌트에서 상태 업데이트
+            addNewBook(formData);
+            navigate("/books");
+        } catch (error) {
+            console.error("도서 등록 오류:", error);
+            alert("도서 등록 중 오류가 발생했습니다.");
+        }
+
     };
 
     const handleGoBack = () => {
@@ -68,8 +90,8 @@ function NewBookPage({ addNewBook }) {
                     />
                     <TextField
                         label="도서 줄거리"
-                        name="description"
-                        value={formData.description}
+                        name="summary"
+                        value={formData.summary}
                         onChange={handleChange}
                         fullWidth
                         required
@@ -95,10 +117,12 @@ function NewBookPage({ addNewBook }) {
                             onChange={handleChange}
                             required
                         >
-                            <MenuItem value="로맨스">로맨스</MenuItem>
-                            <MenuItem value="SF/판타지">SF/판타지</MenuItem>
-                            <MenuItem value="미스터리/공포">미스터리/공포</MenuItem>
-                            <MenuItem value="드라마">드라마</MenuItem>
+                            <MenuItem value="ROMANCE">로맨스</MenuItem>
+                            <MenuItem value="SF">SF</MenuItem>
+                            <MenuItem value="MYSTERY">미스터리</MenuItem>
+                            <MenuItem value="THRILLER">공포,스릴러</MenuItem>
+                            <MenuItem value="HISTORY">역사</MenuItem>
+                            <MenuItem value="ESSAY">에세이</MenuItem>
                         </Select>
                     </FormControl>
                     <Button type="submit" variant="contained" color="primary" fullWidth>
