@@ -34,12 +34,22 @@
 }
 
 .logout-button {
-    background-color: #b60839;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    width: 50%;
-    border-radius: 8px;
-    transition: background-color 0.3s;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 50%;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+/* 마우스를 올렸을 때 색상 */
+.logout-button:hover {
+  background-color: #2c3e50;
+}
+
+/* 클릭(누르고 있는) 상태 색상 */
+.logout-button:active {
+  background-color: #154c73;
 }
