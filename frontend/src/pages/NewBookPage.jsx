@@ -9,7 +9,7 @@ function NewBookPage({ addNewBook }) {
         summary: '',
         genre: '',
         publisher: '',
-        cover_img: ''  // 표지 이미지 URL 추가
+        coverImg: ''  // 표지 이미지 URL 추가
     });
     const [openApiKeyModal, setOpenApiKeyModal] = useState(false); // API 키 입력 팝업 상태
     const [userApiKey, setUserApiKey] = useState(''); // 입력된 API 키 상태
@@ -86,7 +86,7 @@ function NewBookPage({ addNewBook }) {
 
             const imageUrl = data.data[0].url;
             setGeneratedCoverImage(imageUrl); // 생성된 이미지 URL 상태에 저장
-            setFormData(prevData => ({ ...prevData, cover_img: imageUrl }));  // formData에 이미지 URL 저장
+            setFormData(prevData => ({ ...prevData, coverImg: imageUrl }));  // formData에 이미지 URL 저장
 
         } catch (error) {
             setCoverGenerationError(error.message);
@@ -100,6 +100,7 @@ function NewBookPage({ addNewBook }) {
         e.preventDefault();
 
         try {
+            console.log(formData);
             const response = await fetch("http://localhost:8080/api/books", {
                 method: "POST",
                 headers: {
@@ -321,16 +322,6 @@ function NewBookPage({ addNewBook }) {
                             onClick={() => setGeneratedCoverImage(null)} // 다시 생성 버튼
                         >
                             다시 생성
-                        </Button>
-
-                        {/* 이미지 다운로드 버튼 추가 */}
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => handleDownloadImage(generatedCoverImage)} // 다운로드 함수 실행
-                            disabled={isGenerating} // 이미지 생성 중일 경우 비활성화
-                        >
-                            이미지 다운로드
                         </Button>
 
                         <Button

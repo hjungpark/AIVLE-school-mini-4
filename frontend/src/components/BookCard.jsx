@@ -14,7 +14,7 @@ function BookCard({ book, onClick }) {
         >
             <div className="book-cover">
                 <img
-                    src={book.cover_img || "/images/default-book.png"}
+                    src={book.coverImg || "/images/default-book.png"}
                     alt="book cover"
                 />
             </div>
