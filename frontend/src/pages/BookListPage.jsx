@@ -3,17 +3,21 @@ import BookCard from '../components/BookCard';
 import BookDetailModal from '../components/BookDetailModal';
 import { Modal, Box, Typography, TextField, Grid, Container } from '@mui/material';
 import axios from 'axios';
-import './BookListPage.css'; // CSS 따로 관리
+import './BookListPage.css';
 
 function BookListPage({books, setBooks, fetchBooks}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
 
+    // useEffect(() => {
+    //     axios.get('/api/books')
+    //         .then(response => setBooks(response.data))
+    //         .catch(err => console.error("도서 불러오기 실패:", err));
+    // }, []);
+
     useEffect(() => {
-        axios.get('/api/books')
-            .then(response => setBooks(response.data))
-            .catch(err => console.error("도서 불러오기 실패:", err));
+        fetchBooks();
     }, []);
 
     const filteredBooks = books.filter(book =>
@@ -46,9 +50,9 @@ function BookListPage({books, setBooks, fetchBooks}) {
     };
 
     return (
-        <div className="main-content" style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 60px)' }}>
+        <div className="container">
             {/* 검색창 고정 */}
-            <div style={{ padding: '16px', backgroundColor: '#fff', position: 'sticky', top: 0, zIndex: 10 }}>
+            <div className="search-container">
                 <TextField
                     label="검색어 입력"
                     variant="outlined"
@@ -59,7 +63,7 @@ function BookListPage({books, setBooks, fetchBooks}) {
             </div>
 
             {/* 카드 리스트 영역 스크롤 */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '16px', backgroundColor: '#fafafa' }}>
+            <div className="card-list-container">
                 <Grid container spacing={3}>
                     {filteredBooks.length > 0 ? (
                         filteredBooks.map(book => (
