@@ -34,7 +34,6 @@ phases:
 
 artifacts:
   files:
-    - 'dist/my-angular-repo/**/*'
     - appspec.yml
     - 'deploy-scripts/**/*'
     - backend/build/libs/*.jar
