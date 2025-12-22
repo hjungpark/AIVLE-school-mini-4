@@ -3,13 +3,13 @@ os: linux
 
 files:
   - source: frontend/dist/
-    destination: /usr/share/nginx/html
+    destination: /var/www/a081100-mini5-AngularApp
 
   - source: backend/build/libs/
     destination: /home/ec2-user/backend
 
 permissions:
-  - object: /usr/share/nginx/html
+  - object: /var/www/a081100-mini5-AngularApp
     pattern: '**'
     mode: '0755'
     owner: root
