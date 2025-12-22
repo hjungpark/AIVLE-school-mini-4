@@ -1,14 +1,28 @@
 version: 0.0
 os: linux
 files:
-  - source: dist/my-angular-project
-    destination: /var/www/my-angular-repo
+  # 프론트엔드 정적 파일 배포
+  - source: frontend/dist
+    destination: /usr/share/nginx/html/my-angular-repo
+
+  # 백엔드 JAR 파일
+  - source: backend/build/libs/my-backend.jar
+    destination: /home/ec2-user/backend
 permissions:
-  - object: /var/www/my-angular-repo
+  - object: /usr/share/nginx/html/my-angular-repo
     pattern: '**'
     mode: '0755'
     owner: root
     group: root
+    type:
+      - file
+      - directory
+
+  - object: /home/ec2-user/backend
+    pattern: '**'
+    mode: '755'
+    owner: ec2-user
+    group: ec2-user
     type:
       - file
       - directory
