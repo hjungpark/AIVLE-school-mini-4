@@ -3,13 +3,13 @@ os: linux
 files:
   # 프론트엔드 정적 파일 배포
   - source: frontend/dist
-    destination: /usr/share/nginx/html/my-angular-repo
+    destination: /usr/share/nginx/html
 
   # 백엔드 JAR 파일
   - source: backend/build/libs/my-backend.jar
     destination: /home/ec2-user/backend
 permissions:
-  - object: /usr/share/nginx/html/my-angular-repo
+  - object: /usr/share/nginx/html
     pattern: '**'
     mode: '0755'
     owner: root
