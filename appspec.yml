@@ -2,27 +2,18 @@ version: 0.0
 os: linux
 
 files:
-  - source: frontend/dist/
-    destination: /var/www/a081100-mini5-AngularApp
+  - source: frontend/dist
+    destination: /var/www/my-angular-project
 
-  - source: backend/build/libs/
-    destination: /home/ec2-user/backend
+  - source: backend/build/libs
+    destination: /opt/app
 
 permissions:
-  - object: /var/www/a081100-mini5-AngularApp
+  - object: /var/www/my-angular-project
     pattern: '**'
     mode: '0755'
-    owner: root
-    group: root
-    type:
-      - file
-      - directory
-
-  - object: /home/ec2-user/backend
-    pattern: '**'
-    mode: '0755'
-    owner: ec2-user
-    group: ec2-user
+    owner: www-data
+    group: www-data
     type:
       - file
       - directory
@@ -31,4 +22,8 @@ hooks:
   ApplicationStart:
     - location: deploy-scripts/application-start-hook.sh
       timeout: 300
-      
+      runas: root
+  ApplicationStop:
+    - location: deploy-scripts/application-end-hook.sh
+      timeout: 300
+      runas: root
