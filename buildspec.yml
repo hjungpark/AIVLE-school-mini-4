@@ -3,17 +3,11 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20
-    commands:
-      - echo "Installing Angular CLI..."
-      - npm install -g @angular/cli@17
-      - java: corretto17
-      - nodejs: 18
+      java: corretto17
+      nodejs: 18
 
   pre_build:
     commands:
-      - echo "Installing project dependencies..."
-      - npm install
       - echo "Frontend install"
       - cd frontend
       - npm ci
@@ -21,9 +15,6 @@ phases:
 
   build:
     commands:
-      - echo "Building Angular project..."
-      - ng build -c production
-      - echo "Build completed at $(date)"
       - echo "Frontend build"
       - cd frontend
       - npm run build
@@ -43,10 +34,7 @@ phases:
       - ls -al frontend/dist
 
 artifacts:
-  base-directory: dist/my-angular-project
   files:
-    - '**/*'
-  discard-paths: no
     - appspec.yml
     - deploy-scripts/**/*
     - backend/build/libs/**/*
