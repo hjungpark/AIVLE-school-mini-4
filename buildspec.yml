@@ -9,29 +9,29 @@ phases:
   pre_build:
     commands:
       - echo "Frontend install"
-      - cd frontend
+      - cd $CODEBUILD_SRC_DIR/frontend || exit 1
       - npm ci
-      - cd ..
+      - cd $CODEBUILD_SRC_DIR
 
   build:
     commands:
       - echo "Frontend build"
-      - cd frontend
+      - cd $CODEBUILD_SRC_DIR/frontend || exit 1
       - npm run build
-      - cd ..
+      - cd $CODEBUILD_SRC_DIR
 
       - echo "Backend build"
-      - cd backend
+      - cd $CODEBUILD_SRC_DIR/backend || exit 1
       - chmod +x gradlew
       - ./gradlew clean build -x test
-      - cd ..
+      - cd $CODEBUILD_SRC_DIR
 
   post_build:
     commands:
       - echo "=== build output ==="
-      - ls -al
-      - ls -al backend/build/libs
-      - ls -al frontend/dist
+      - ls -al $CODEBUILD_SRC_DIR
+      - ls -al $CODEBUILD_SRC_DIR/backend/build/libs
+      - ls -al $CODEBUILD_SRC_DIR/frontend/dist
 
 artifacts:
   files:

@@ -11,11 +11,13 @@ phases:
   pre_build:
     commands:
       - echo "Install frontend dependencies"
-      - cd frontend            # frontend 디렉토리로 이동
-      - npm ci                 
+      - cd $CODEBUILD_SRC_DIR/frontend || exit 1
+      - npm ci
+      - cd $CODEBUILD_SRC_DIR
 
   build:
     commands:
       - echo "Run unit tests"
-      - cd frontend            # 혹시 경로가 루트라면 다시 이동
+      - cd $CODEBUILD_SRC_DIR/frontend || exit 1
       - ng test --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - cd $CODEBUILD_SRC_DIR
