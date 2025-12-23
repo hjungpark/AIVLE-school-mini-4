@@ -1,13 +1,21 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
       nodejs: 20
     commands:
+      - echo "Install Angular CLI"
       - npm install -g @angular/cli@17
+
   pre_build:
     commands:
-      - npm install
+      - echo "Install frontend dependencies"
+      - cd frontend            # frontend 디렉토리로 이동
+      - npm ci                 
+
   build:
     commands:
+      - echo "Run unit tests"
+      - cd frontend            # 혹시 경로가 루트라면 다시 이동
       - ng test --no-watch --no-progress --browsers=ChromeHeadlessCI
