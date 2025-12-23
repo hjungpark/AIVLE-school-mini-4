@@ -5,32 +5,49 @@ phases:
     runtime-versions:
       nodejs: 20
     commands:
-      - echo "Install Angular CLI globally"
+      - echo "Installing Angular CLI..."
       - npm install -g @angular/cli@17
-      - cd $CODEBUILD_SRC_DIR/frontend || exit 1
-      - npm ci
-      - cd $CODEBUILD_SRC_DIR
+      - java: corretto17
+      - nodejs: 18
 
   pre_build:
     commands:
-      - echo "Pre-build phase: nothing extra for unit test"
+      - echo "Installing project dependencies..."
+      - npm install
+      - echo "Frontend install"
+      - cd frontend
+      - npm ci
+      - cd ..
 
   build:
     commands:
-      - echo "Running Angular unit tests"
-      - cd $CODEBUILD_SRC_DIR/frontend || exit 1
-      # Headless Chrome 실행을 위해 환경 변수 설정 (CodeBuild용)
-      - export CHROME_BIN=/usr/bin/google-chrome-stable || true
-      - ng test --no-watch --no-progress --browsers=ChromeHeadlessCI || echo "Unit test failures ignored for now"
-      - cd $CODEBUILD_SRC_DIR
+      - echo "Building Angular project..."
+      - ng build -c production
+      - echo "Build completed at $(date)"
+      - echo "Frontend build"
+      - cd frontend
+      - npm run build
+      - cd ..
+
+      - echo "Backend build"
+      - cd backend
+      - chmod +x gradlew
+      - ./gradlew clean build -x test
+      - cd ..
 
   post_build:
     commands:
-      - echo "=== Unit test build complete ==="
-      - ls -al $CODEBUILD_SRC_DIR/frontend/dist
+      - echo "=== build output ==="
+      - ls -al
+      - ls -al backend/build/libs
+      - ls -al frontend/dist
 
 artifacts:
+  base-directory: dist/my-angular-project
   files:
-      - appspec.yml
-      - deploy-scripts/**/*
-      - frontend/dist/**/*
+    - '**/*'
+  discard-paths: no
+    - appspec.yml
+    - deploy-scripts/**/*
+    - backend/build/libs/**/*
+    - frontend/dist/**/*
